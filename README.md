@@ -1,38 +1,81 @@
 # EFR32MG26 Secure Boot Design with Hardware Root of Trust
 
+---
+
+## Key Deliverables
+
+### 1. Hardened Bootloader
+Binary implementing non-binary token verification and random jitter logic.
+
+| File | Description |
+|------|-------------|
+| [`src/bootloader/secure_boot.c`](src/bootloader/secure_boot.c) | Four-layer token verification with TRNG-seeded jitter |
+| [`src/bootloader/anti_rollback.c`](src/bootloader/anti_rollback.c) | OTP monotonic version enforcement |
+| [`include/secure_boot.h`](include/secure_boot.h) | Bootloader public interface |
+| [`include/anti_rollback.h`](include/anti_rollback.h) | Anti-rollback public interface |
+
+**Build:** `make all` produces the bootloader binary.
+
+### 2. Tamper Configuration
+C-code initializing EFR32 ACMP/IADC monitors for preemptive fault detection.
+
+| File | Description |
+|------|-------------|
+| [`src/tamper_detection/tamper_detection.c`](src/tamper_detection/tamper_detection.c) | ACMP voltage glitch detection + IADC temperature monitoring |
+| [`include/tamper_detection.h`](include/tamper_detection.h) | Tamper event definitions and config structs |
+| [`config/example_config.c`](config/example_config.c) | Example threshold and policy configuration |
+
+### 3. Attestation Schema
+JSON/CBOR format for the signed boot health/telemetry report.
+
+| File | Description |
+|------|-------------|
+| [`config/attestation_schema.json`](config/attestation_schema.json) | Formal JSON Schema defining report structure |
+| [`src/attestation/attestation.c`](src/attestation/attestation.c) | `export_report_json()` and `export_report_cbor()` implementations |
+| [`include/attestation.h`](include/attestation.h) | Attestation public interface |
+
+### Supporting Evidence
+| File | Description |
+|------|-------------|
+| [`validation_report/VALIDATION_REPORT.md`](validation_report/VALIDATION_REPORT.md) | ChipWhisperer resilience evidence, attack analysis, compliance mapping |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Full architecture documentation |
+| [`docs/SOLUTION_RESPONSE.md`](docs/SOLUTION_RESPONSE.md) | Solution summary and challenge responses |
+
+---
+
 ## Overview
 
 This repository contains a comprehensive implementation of a Hardened Secure Boot architecture for the Silicon Labs EFR32MG26 wireless microcontroller, utilizing Secure Vault High and the immutable Root of Trust Secure Loader (RTSL) to guarantee firmware authenticity and system integrity.
 
 ## Key Features
 
-### 🔒 Hardened Bootloader
+### Hardened Bootloader
 - **Multi-layer Token Verification**: Four-stage verification with non-binary tokens requiring multiple fault injections to bypass
 - **TRNG-based Random Jitter**: Timing desynchronization to defeat fault injection attacks
 - **Glitch-Resistant Control Flow**: Replaces standard boolean checks with complex verification sequences
 
-### 🛡️ Active Tamper Detection
+### Active Tamper Detection
 - **ACMP Voltage Monitoring**: Real-time detection of voltage glitches and anomalies
 - **IADC Temperature Monitoring**: Detection of environmental attacks (freeze/thermal)
 - **Preemptive Response**: Immediate countermeasures on tamper detection
 
-### 🔐 Anti-Rollback Protection
+### Anti-Rollback Protection
 - **OTP Counters**: One-Time Programmable monotonic version tracking
 - **Version Enforcement**: Prevents firmware downgrade attacks
 - **Cryptographic Binding**: Firmware versions cryptographically bound to device
 
-### 📊 Measured Boot & Attestation
+### Measured Boot & Attestation
 - **Boot Measurements**: SHA-256 hashing of boot components
 - **Signed Health Reports**: ECDSA-signed attestation for remote verification
 - **Multiple Formats**: JSON (human-readable) and CBOR (compact) export
 - **Event Logging**: Comprehensive boot event tracking
 
-### 🏰 TrustZone Isolation
+### TrustZone Isolation
 - **Secure World Isolation**: Critical boot logic protected by ARM TrustZone-M
 - **SAU Configuration**: Security Attribution Unit enforces memory isolation
 - **Secure Gateways**: Controlled transition between Secure and Non-Secure worlds
 
-### 🔑 PUF-based Key Protection
+### PUF-based Key Protection
 - **Hardware-Bound Keys**: Physically Unclonable Function for device-unique keys
 - **Key Wrapping**: Secure storage of cryptographic material
 - **Anti-Dumping**: Protection against memory extraction attacks
@@ -244,23 +287,23 @@ See [VALIDATION_REPORT.md](validation_report/VALIDATION_REPORT.md) for detailed 
 ## Compliance Standards
 
 ### NIST SP 800-140 (FIPS 140-3 Level 3)
-✅ Physical Security Mechanisms  
-✅ Cryptographic Module Specification  
-✅ Secure Key Management  
-✅ Self-Tests and Integrity Checks  
-✅ Secure Boot Chain
+ Physical Security Mechanisms  
+ Cryptographic Module Specification  
+ Secure Key Management  
+ Self-Tests and Integrity Checks  
+ Secure Boot Chain
 
 ### Common Criteria EAL4+
-✅ Semiformal Design and Testing  
-✅ Vulnerability Analysis  
-✅ Methodically Tested  
-✅ Independently Assured
+ Semiformal Design and Testing  
+ Vulnerability Analysis  
+ Methodically Tested  
+ Independently Assured
 
 ### AIS 189 (Automotive Cyber Security - India)
-✅ Secure Boot Requirements  
-✅ Anti-Tamper Protection  
-✅ Key Management  
-✅ Secure Update Mechanisms
+ Secure Boot Requirements  
+ Anti-Tamper Protection  
+ Key Management  
+ Secure Update Mechanisms
 
 ## Business Value
 
@@ -340,4 +383,4 @@ This is a reference implementation demonstrating secure boot concepts for the EF
 
 **Status**: Production Ready (with hardware enablement)  
 **Security Level**: FIPS 140-3 Level 3 / Common Criteria EAL4+  
-**Last Updated**: 2026-02-08
+**Last Updated**: 2026-02-0
