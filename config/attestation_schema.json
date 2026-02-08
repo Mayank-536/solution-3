@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Boot Attestation Report Schema",
+  "description": "JSON schema for EFR32MG26 secure boot attestation reports",
+  "type": "object",
+  "required": ["version", "boot_count", "firmware_version", "measurements", "events", "signature"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "description": "Attestation report format version",
+      "minimum": 1
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Challenge nonce for freshness proof (hex encoded)",
+      "pattern": "^[0-9A-Fa-f]{32}$"
+    },
+    "boot_count": {
+      "type": "integer",
+      "description": "Number of successful boots",
+      "minimum": 0
+    },
+    "firmware_version": {
+      "type": "string",
+      "description": "Current firmware version (hex encoded)",
+      "pattern": "^0x[0-9A-Fa-f]{8}$"
+    },
+    "security_status": {
+      "type": "string",
+      "description": "Security configuration flags (hex encoded)",
+      "pattern": "^0x[0-9A-Fa-f]{8}$"
+    },
+    "tamper_events": {
+      "type": "integer",
+      "description": "Count of tamper events detected",
+      "minimum": 0
+    },
+    "uptime": {
+      "type": "integer",
+      "description": "System uptime in seconds",
+      "minimum": 0
+    },
+    "measurements": {
+      "type": "array",
+      "description": "Boot component measurements",
+      "items": {
+        "type": "object",
+        "required": ["component_id", "measurement", "type"],
+        "properties": {
+          "component_id": {
+            "type": "integer",
+            "description": "Unique component identifier",
+            "minimum": 0
+          },
+          "measurement": {
+            "type": "string",
+            "description": "SHA-256 measurement hash (hex encoded)",
+            "pattern": "^[0-9A-Fa-f]{64}$"
+          },
+          "type": {
+            "type": "integer",
+            "description": "Type of measurement performed",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "description": "Boot event log entries",
+      "items": {
+        "type": "object",
+        "required": ["type", "data", "timestamp", "description"],
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "Event type identifier",
+            "minimum": 0
+          },
+          "data": {
+            "type": "integer",
+            "description": "Event-specific data",
+            "minimum": 0
+          },
+          "timestamp": {
+            "type": "integer",
+            "description": "Event timestamp (Unix epoch)",
+            "minimum": 0
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable event description",
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "signature": {
+      "type": "string",
+      "description": "ECDSA signature over report (hex encoded)",
+      "pattern": "^[0-9A-Fa-f]{128}$"
+    }
+  }
+}

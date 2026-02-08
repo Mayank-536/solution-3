@@ -1,0 +1,48 @@
+# Build artifacts
+build/
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.d
+
+# Compiler outputs
+*.su
+*.a
+*.so
+*.lib
+
+# Debug files
+*.log
+*.dmp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Documentation builds
+docs/_build/
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Test outputs
+test_results/
+coverage/
