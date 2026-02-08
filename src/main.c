@@ -13,6 +13,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 
 /* Firmware version for anti-rollback */
 #define FIRMWARE_VERSION          1
