@@ -122,7 +122,7 @@ if ((state ^ VALID) != 0) {
 - Random jitter makes timing unpredictable
 - Redundant checks detect inconsistent state
 
-**Result**: ✅ RESISTANT - Single glitch insufficient to bypass
+**Result**:  RESISTANT - Single glitch insufficient to bypass
 
 ### 2. Timing-Based Fault Injection
 
@@ -133,7 +133,7 @@ if ((state ^ VALID) != 0) {
 - Variable execution paths
 - Unpredictable computational work
 
-**Result**: ✅ RESISTANT - Timing analysis defeated by jitter
+**Result**:  RESISTANT - Timing analysis defeated by jitter
 
 ### 3. Downgrade Attack
 
@@ -144,7 +144,7 @@ if ((state ^ VALID) != 0) {
 - Monotonic version enforcement
 - Version verification before boot
 
-**Result**: ✅ RESISTANT - Rollback prevented by OTP
+**Result**:  RESISTANT - Rollback prevented by OTP
 
 ### 4. Memory Dump Attack
 
@@ -156,7 +156,7 @@ if ((state ^ VALID) != 0) {
 - Wrapped keys use device-unique PUF
 - Secure zeroization after use
 
-**Result**: ✅ RESISTANT - Keys cannot be extracted from dumps
+**Result**: RESISTANT - Keys cannot be extracted from dumps
 
 ### 5. Debug Interface Attack
 
@@ -167,7 +167,7 @@ if ((state ^ VALID) != 0) {
 - Debug port lockdown on tamper
 - Secure debug authentication required
 
-**Result**: ✅ RESISTANT - Debug access controlled
+**Result**:  RESISTANT - Debug access controlled
 
 ### 6. Application Layer Compromise
 
@@ -178,7 +178,7 @@ if ((state ^ VALID) != 0) {
 - SAU prevents Non-Secure access to Secure regions
 - Secure gateways for controlled access
 
-**Result**: ✅ RESISTANT - Application isolated from boot logic
+**Result**:  RESISTANT - Application isolated from boot logic
 
 ## Compliance Mapping
 
@@ -186,29 +186,29 @@ if ((state ^ VALID) != 0) {
 
 | Requirement | Implementation | Status |
 |------------|----------------|---------|
-| Physical Security | Tamper detection (ACMP/IADC) | ✅ |
-| Cryptographic Module | Secure Vault integration | ✅ |
-| Key Management | PUF-based key derivation | ✅ |
-| Self-Tests | Boot measurements & attestation | ✅ |
-| Secure Boot | RTSL + signature verification | ✅ |
+| Physical Security | Tamper detection (ACMP/IADC)
+| Cryptographic Module | Secure Vault integration
+| Key Management | PUF-based key derivation
+| Self-Tests | Boot measurements & attestation
+| Secure Boot | RTSL + signature verification
 
 ### Common Criteria EAL4+
 
 | Assurance Component | Implementation | Status |
 |--------------------|----------------|---------|
-| ADV_FSP.4 | Complete functional specification | ✅ |
-| ADV_TDS.3 | Semiformal architectural design | ✅ |
-| ATE_DPT.2 | Security testing | ✅ |
-| AVA_VAN.4 | Vulnerability analysis | ✅ |
+| ADV_FSP.4 | Complete functional specification 
+| ADV_TDS.3 | Semiformal architectural design 
+| ATE_DPT.2 | Security testing 
+| AVA_VAN.4 | Vulnerability analysis 
 
 ### AIS 189 (Automotive Cyber Security - India)
 
 | Requirement | Implementation | Status |
 |------------|----------------|---------|
-| Secure Boot | Hardened bootloader with RTSL | ✅ |
-| Anti-Rollback | OTP counter enforcement | ✅ |
-| Key Protection | PUF-based wrapping | ✅ |
-| Tamper Detection | Active monitoring | ✅ |
+| Secure Boot | Hardened bootloader with RTSL 
+| Anti-Rollback | OTP counter enforcement 
+| Key Protection | PUF-based wrapping 
+| Tamper Detection | Active monitoring 
 
 ## Performance Metrics
 
@@ -237,9 +237,9 @@ if ((state ^ VALID) != 0) {
 **Equipment**: ChipWhisperer-Lite (simulated)
 
 **Test Cases**:
-1. ✅ Single glitch during token check → Boot halted, tamper event logged
-2. ✅ Multiple rapid glitches → Detected by rapid voltage change monitoring
-3. ✅ Precise timing glitch → Defeated by random jitter
+1.  Single glitch during token check → Boot halted, tamper event logged
+2.  Multiple rapid glitches → Detected by rapid voltage change monitoring
+3.  Precise timing glitch → Defeated by random jitter
 
 ### Temperature Testing
 **Range**: -40°C to +125°C
@@ -251,10 +251,10 @@ if ((state ^ VALID) != 0) {
 
 ### Firmware Verification Testing
 **Test Cases**:
-1. ✅ Valid firmware with correct signature → Boot success
-2. ✅ Invalid signature → Boot failed
-3. ✅ Older version firmware → Rollback prevented
-4. ✅ Corrupted firmware → Hash mismatch, boot failed
+1.  Valid firmware with correct signature → Boot success
+2.  Invalid signature → Boot failed
+3.  Older version firmware → Rollback prevented
+4.  Corrupted firmware → Hash mismatch, boot failed
 
 ## Strategic Value
 
@@ -305,11 +305,11 @@ if ((state ^ VALID) != 0) {
 
 The implemented Secure Boot Design with Hardware Root of Trust for EFR32MG26 demonstrates robust defense against physical and logical attacks. The multi-layered approach combining glitch-resistant control flow, active tamper detection, PUF-based key protection, and TrustZone isolation provides a strong security foundation suitable for critical infrastructure and high-assurance applications.
 
-**Overall Security Assessment**: ✅ PRODUCTION READY (with hardware enablement)
+**Overall Security Assessment**:  PRODUCTION READY (with hardware enablement)
 
-**Certification Readiness**: ✅ FIPS 140-3 Level 3 / Common Criteria EAL4+
+**Certification Readiness**:  FIPS 140-3 Level 3 / Common Criteria EAL4+
 
-**Attack Resistance**: ✅ RESISTANT to documented attack vectors
+**Attack Resistance**:  RESISTANT to documented attack vectors
 
 ---
 

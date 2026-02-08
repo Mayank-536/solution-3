@@ -296,20 +296,20 @@ Compare (Major.Minor.Patch)
 ## Threat Model
 
 ### In-Scope Threats
-✅ Voltage glitching attacks  
-✅ Clock glitching attacks  
-✅ Laser fault injection  
-✅ Firmware downgrade  
-✅ Memory dump extraction  
-✅ Debug interface attacks  
-✅ Application-layer exploits  
-✅ Supply chain attacks (via attestation)
+ Voltage glitching attacks  
+ Clock glitching attacks  
+ Laser fault injection  
+ Firmware downgrade  
+ Memory dump extraction  
+ Debug interface attacks  
+ Application-layer exploits  
+ Supply chain attacks (via attestation)
 
 ### Out-of-Scope Threats
-❌ Invasive chip decapping  
-❌ Focused ion beam (FIB) attacks  
-❌ Advanced side-channel (DPA with unlimited traces)  
-❌ Physical chip destruction
+ Invasive chip decapping  
+ Focused ion beam (FIB) attacks  
+ Advanced side-channel (DPA with unlimited traces)  
+ Physical chip destruction
 
 ## Performance Characteristics
 
@@ -335,16 +335,16 @@ Compare (Major.Minor.Patch)
 ## Certification Considerations
 
 ### FIPS 140-3 Level 3
-- ✅ Physical security mechanisms (tamper detection)
-- ✅ Role-based authentication (Secure/Non-Secure)
-- ✅ Cryptographic module (Secure Vault)
-- ✅ Zeroization procedures
+-  Physical security mechanisms (tamper detection)
+-  Role-based authentication (Secure/Non-Secure)
+-  Cryptographic module (Secure Vault)
+-  Zeroization procedures
 
 ### Common Criteria EAL4+
-- ✅ Semiformal security policy model
-- ✅ Independently verified design
-- ✅ Vulnerability analysis
-- ✅ Methodically tested
+-  Semiformal security policy model
+-  Independently verified design
+-  Vulnerability analysis
+-  Methodically tested
 
 ## Integration Guidelines
 
