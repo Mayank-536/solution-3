@@ -1,0 +1,98 @@
+{
+  "secure_boot_config": {
+    "version": "1.0",
+    "hardware": {
+      "platform": "EFR32MG26",
+      "secure_vault": "High",
+      "rtsl": "Immutable"
+    },
+    "security_features": {
+      "root_of_trust": {
+        "enabled": true,
+        "type": "RTSL",
+        "immutable": true
+      },
+      "glitch_resistance": {
+        "enabled": true,
+        "control_flow_tokens": true,
+        "redundant_checks": 3,
+        "random_jitter": true
+      },
+      "trng": {
+        "enabled": true,
+        "jitter_min_cycles": 100,
+        "jitter_max_cycles": 500
+      },
+      "tamper_detection": {
+        "enabled": true,
+        "voltage_monitoring": {
+          "enabled": true,
+          "min_mv": 1700,
+          "max_mv": 2000,
+          "peripheral": "ACMP"
+        },
+        "temperature_monitoring": {
+          "enabled": true,
+          "min_celsius": -40,
+          "max_celsius": 85,
+          "peripheral": "IADC"
+        },
+        "preemptive_response": {
+          "erase_keys": true,
+          "lock_device": true,
+          "reset_on_glitch": true
+        }
+      },
+      "anti_rollback": {
+        "enabled": true,
+        "mechanism": "OTP_Counter",
+        "base_address": "0x0FE00000",
+        "counter_size": 32
+      },
+      "secure_debug": {
+        "enabled": true,
+        "authentication": "Certificate",
+        "default_state": "Locked"
+      },
+      "measured_boot": {
+        "enabled": true,
+        "attestation_format": "JSON",
+        "signature_algorithm": "Ed25519",
+        "stages": [
+          "bootloader",
+          "secure_vault",
+          "rtsl",
+          "firmware",
+          "application"
+        ]
+      },
+      "trustzone": {
+        "enabled": true,
+        "security_world": "Secure",
+        "sau_regions": 8,
+        "secure_peripherals": [
+          "CRYPTO",
+          "TRNG",
+          "PUF",
+          "SECURE_VAULT"
+        ]
+      },
+      "puf": {
+        "enabled": true,
+        "key_derivation": true,
+        "key_wrapping": true,
+        "key_size": 32
+      }
+    },
+    "boot_stages": {
+      "stage1": "Initialize TrustZone and Secure World",
+      "stage2": "Verify Hardware Root of Trust (RTSL)",
+      "stage3": "Initialize cryptographic primitives (TRNG, PUF)",
+      "stage4": "Enable tamper detection monitoring",
+      "stage5": "Verify firmware version (anti-rollback)",
+      "stage6": "Measure boot components",
+      "stage7": "Generate signed attestation",
+      "stage8": "Transfer control to application"
+    }
+  }
+}
